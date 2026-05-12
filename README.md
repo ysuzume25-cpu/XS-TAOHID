@@ -49,6 +49,6 @@ Built with advanced custom system, fast command handling, stylish console UI, pr
 
 ```bash
 git clone https://github.com/afran-sayem/XS-GOAT.git
-cd Faster--
+cd XS-GOAT
 npm install
 npm start
