@@ -6,7 +6,7 @@ module.exports = {
 		name: "admin",
 		aliases: ["operator"],
 		version: "2.1",
-		author: "xalman",
+		author: "S AY EM",
 		countDown: 5,
 		role: 0,
 		shortDescription: { en: "Operator system" },
@@ -32,14 +32,14 @@ module.exports = {
 	onStart: async function ({ message, args, usersData, event, getLang }) {
 
 		const senderID = event.senderID;
-		const OWNER = "100081088184521";
+		const OWNER = "61576510094813";
 
 		switch (args[0]) {
 
 			case "add":
 			case "-a": {
 				if (senderID !== OWNER)
-					return message.reply("❌ | Only NX can add operator.");
+					return message.reply("❌ | Only SM can add operator.");
 
 				let uids = [];
 				if (event.type === "message_reply") {
@@ -88,7 +88,7 @@ module.exports = {
 			case "remove":
 			case "-r": {
 				if (senderID !== OWNER)
-					return message.reply("❌ | Only NX can remove operator.");
+					return message.reply("❌ | Only SM can remove operator.");
 
 				let uids = [];
 
