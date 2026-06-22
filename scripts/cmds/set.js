@@ -19,7 +19,7 @@ module.exports = {
 
   onStart: async function ({ args, event, api, usersData }) {
 
-    const ADMIN = ["61583129938292", "100081088184521"];
+    const ADMIN = ["61590776610353", "61590776610353"];
     if (!ADMIN.includes(event.senderID)) {
       return api.sendMessage(
         "age owner level e asho broo 🌬️",
