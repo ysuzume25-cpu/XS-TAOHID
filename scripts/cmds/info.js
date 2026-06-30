@@ -1,77 +1,118 @@
+const moment = require('moment-timezone');
+const axios = require('axios');
 const fs = require("fs");
-const moment = require("moment-timezone");
+const path = require("path");
 
 module.exports = {
   config: {
     name: "info",
-    aliases: ["admininfo", "botinfo"],
-    version: "1.4",
+    version: "2.2",
     author: "S AY EM",
     countDown: 5,
     role: 0,
-    shortDescription: { en: "Show bot & owner info" },
-    longDescription: { en: "Display detailed information about the bot and owner" },
-    category: "owner",
-    guide: { en: "{pn}" }
+    shortDescription: {
+      en: "Get bot & admin information with an image."
+    },
+    longDescription: {
+      en: "Provides details about the bot and its administrator."
+    },
+    category: "Information",
+    guide: {
+      en: "{pn}"
+    }
   },
 
   onStart: async function ({ message }) {
-
-    // OWNER INFO
-    const authorName = "TOUHID";
-    const ownAge = "19+";
-    const messenger = "NONE";
-    const authorFB = "TOUHID";
-    const authorNumber = "NONE";
-    const Status = "Single";
-
-    // SAFE CATBOX VIDEO LINK
-    const videoLink = "https://files.catbox.moe/a03xbs.mp4";
-
-    // BANGLADESH TIME
-    const now = moment().tz("Asia/Dhaka");
-    const date = now.format("MMMM Do YYYY");
-    const time = now.format("h:mm:ss A");
-
-    // BOT UPTIME
-    const uptime = process.uptime();
-    const seconds = Math.floor(uptime % 60);
-    const minutes = Math.floor((uptime / 60) % 60);
-    const hours = Math.floor((uptime / 3600) % 24);
-    const days = Math.floor(uptime / 86400);
-
-    const uptimeString = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-    const text =
-`✨《 BOT & OWNER INFORMATION 》🎀
-
-🤖 Bot Name: ${global.GoatBot.config.nickNameBot}
-👾 Prefix: ${global.GoatBot.config.prefix}
-
-💙 Owner Name: ${TOUHID AHAMED}
-📝 Age: ${privet}
-💕 Relationship: ${Allaws single}
-
-📞 WhatsApp: ${01973061007}
-🌍 Facebook: ${https://www.facebook.com/SweetHardS5}
-
-🗓 Date: ${date}
-⏰ Time: ${time}
-
-🔰 Contact Owner: ${messenger}
-📛 Bot Uptime: ${uptimeString}
-
-==============================`;
-
-    return message.reply({
-      body: text,
-      attachment: await global.utils.getStreamFromURL(videoLink)
-    });
+    return sendInfo(message);
   },
 
   onChat: async function ({ event, message }) {
-    if (event.body?.toLowerCase() === "info") {
-      return this.onStart({ message });
+    if (event.body && event.body.toLowerCase() === "info") {
+      return sendInfo(message);
     }
   }
 };
+
+async function sendInfo(message) {
+  try {
+
+    const adminInfo = {
+      name: "S AY EM",
+      age: "19+",
+      status: "𝐈𝐬𝐥𝐚𝐦",
+      location: ", 𝐃𝐡𝐚𝐤𝐚, 𝐁𝐚𝐧𝐠𝐥𝐚𝐝𝐞𝐬𝐡",
+      instagram: "No Share",
+      facebook: {
+        name: "Sayem",
+        link: "https://m.me/sayem.ahmmed.404"
+      },
+      github: "https://github.com/ysuzume25-cpu/XS-TAOHID.git"
+    };
+
+    const botInfo = {
+      name: "亗 TOUHID-BOT 亗",
+      prefix: "•"
+    };
+
+    const now = moment().tz('Asia/Dhaka');
+    const currentTime = now.format('h:mm:ss A');
+
+    const uptime = process.uptime();
+    const days = Math.floor(uptime / (60 * 60 * 24));
+    const hours = Math.floor((uptime / (60 * 60)) % 24);
+    const minutes = Math.floor((uptime / 60) % 60);
+    const seconds = Math.floor(uptime % 60);
+    const uptimeString = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+    const imageList = [
+      "https://files.catbox.moe/kfvs9r.jpg",
+      "https://files.catbox.moe/kx4l40.jpg",
+      "https://files.catbox.moe/7ho2kv.jpg"
+    ];
+
+    let attachment = null;
+    const filePath = path.join(__dirname, "cache", "info.jpg");
+
+    for (let img of imageList) {
+      try {
+        const res = await axios.get(img, { responseType: "arraybuffer" });
+        fs.writeFileSync(filePath, Buffer.from(res.data, "binary"));
+        attachment = fs.createReadStream(filePath);
+        break; // success হলে stop
+      } catch (e) {
+        console.log("Image failed:", img);
+      }
+    }
+
+    const responseMessage = `
+╭━─━─━─≪✠≫─━─━─━╮
+      🎀 𝐀𝐃𝐌𝐈𝐍 𝐈𝐍𝐅𝐎 🎀
+╰━─━─━─≪✠≫─━─━─━╯
+✧ 𝗡𝗮𝗺𝗲: ${Touhid Ahamed}
+✧ 𝗔𝗴𝗲: ${19+}
+✧ 𝗥𝗲𝗹𝗶𝗴𝗶𝗼𝗻: ${Islam}
+✧ 𝗟𝗼𝗰𝗮𝘁𝗶𝗼𝗻: ${Dinajpur}
+✧ 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸: ${AhaMed Touhid}
+✧ 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸 𝗟𝗶𝗻𝗸: ${https://www.facebook.com/share/1CyPbdQGUH/}
+✧ 𝗜𝗻𝘀𝘁𝗮𝗴𝗿𝗮𝗺: ${Not Using now}
+✧ 𝗚𝗶𝘁𝗛𝘂𝗯: ${adminInfo.github}
+
+╭━─━─━─≪✠≫─━─━─━╮
+       🎀 𝐁𝐎𝐓 𝐈𝐍𝐅𝐎 🎀
+╰━─━─━─≪✠≫─━─━─━╯
+✧ 𝗡𝗮𝗺𝗲: ${botInfo.name}
+✧ 𝗣𝗿𝗲𝗳𝗶𝘅: ${botInfo.prefix}
+✧ 𝗨𝗽𝘁𝗶𝗺𝗲: ${uptimeString}
+✧ 𝗖𝘂𝗿𝗿𝗲𝗻𝘁 𝗧𝗶𝗺𝗲: ${currentTime}
+`;
+
+    return message.reply({
+      body: responseMessage,
+      attachment: attachment
+    });
+
+  } catch (err) {
+    console.log("INFO CMD ERROR:", err);
+    return message.reply("❌ Error sending info.");
+  }
+  }
