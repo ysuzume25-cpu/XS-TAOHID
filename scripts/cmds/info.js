@@ -40,13 +40,13 @@ async function sendInfo(message) {
       name: "S AY EM",
       age: "19+",
       status: "𝐈𝐬𝐥𝐚𝐦",
-      location: ", 𝐃𝐡𝐚𝐤𝐚, 𝐁𝐚𝐧𝐠𝐥𝐚𝐝𝐞𝐬𝐡",
+      location: "𝐅𝐚𝐫𝐢𝐝𝐩𝐮𝐫, 𝐃𝐡𝐚𝐤𝐚, 𝐁𝐚𝐧𝐠𝐥𝐚𝐝𝐞𝐬𝐡",
       instagram: "No Share",
       facebook: {
         name: "Sayem",
         link: "https://m.me/sayem.ahmmed.404"
       },
-      github: "https://github.com/ysuzume25-cpu/XS-TAOHID.git"
+      github: "https://github.com/afran-sayem"
     };
 
     const botInfo = {
